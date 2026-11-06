@@ -40,10 +40,10 @@ export const AnnouncementBar: React.FC = () => {
             <span className="text-[#C6A75E]/40">|</span>
 
             <Link
-              href="/#durga-puja-2026"
+              href="/#kali-puja-2026"
               className="text-[#DFC483] hover:underline font-semibold"
             >
-              Durga Puja 2026 Theme &rarr;
+              Kali Puja 2026 Theme &rarr;
             </Link>
           </div>
         </div>

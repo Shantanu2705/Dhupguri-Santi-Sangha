@@ -4,7 +4,7 @@ import { AboutSection } from './components/AboutSection';
 import { HistorySection } from './components/HistorySection';
 import { ActivitiesSection } from './components/ActivitiesSection';
 import { StatsSection } from './components/StatsSection';
-import { DurgaPujaAnnouncement } from './components/DurgaPujaAnnouncement';
+import { KaliPujaAnnouncement } from './components/KaliPujaAnnouncement';
 import { GallerySection } from './components/GallerySection';
 import { CommitteeSection } from './components/CommitteeSection';
 import { ContactSection } from './components/ContactSection';
@@ -27,8 +27,8 @@ export default function HomePage() {
       {/* SECTION 7: Membership & Club Statistics */}
       <StatsSection />
 
-      {/* SECTION 8: Special Announcement – Durga Puja 2026 */}
-      <DurgaPujaAnnouncement />
+      {/* SECTION 8: Special Announcement – Kali Puja 2026 */}
+      <KaliPujaAnnouncement />
 
       {/* SECTION 9: Photo Gallery */}
       <GallerySection />

@@ -13,17 +13,59 @@ export const ContactSection: React.FC = () => {
     message: '',
   });
   const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [lastSubmitTime, setLastSubmitTime] = useState<number>(0);
+
+  const sanitizeInput = (val: string): string => {
+    return val
+      .replace(/[<>]/g, '') // Strip brackets to neutralize HTML/XSS
+      .replace(/javascript:/gi, '') // Strip script pseudo-protocol
+      .trim();
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Compose WhatsApp message directly to the official contact
-    const text = `*Inquiry from Dhupguri Santi Sangha Website*%0A*Name:* ${encodeURIComponent(
-      formData.name
-    )}%0A*Phone:* ${encodeURIComponent(formData.phone)}%0A*Subject:* ${encodeURIComponent(
-      formData.subject
-    )}%0A*Message:* ${encodeURIComponent(formData.message)}`;
+    setError(null);
 
-    window.open(`https://wa.me/919832065943?text=${text}`, '_blank');
+    // Rate-limiting / anti-spam protection (4 second cooldown)
+    const now = Date.now();
+    if (now - lastSubmitTime < 4000) {
+      setError('Please wait a few moments before sending another message.');
+      return;
+    }
+
+    const sanitizedName = sanitizeInput(formData.name);
+    const sanitizedPhone = sanitizeInput(formData.phone);
+    const sanitizedSubject = sanitizeInput(formData.subject);
+    const sanitizedMessage = sanitizeInput(formData.message);
+
+    // Phone validation (digits, +, -, spaces only, 7 to 18 chars)
+    const phoneRegex = /^[+]?[(]?[0-9]{1,4}[)]?[-\s./0-9]{6,15}$/;
+    if (!phoneRegex.test(sanitizedPhone.replace(/\s+/g, ''))) {
+      setError('Please enter a valid phone number with digits only.');
+      return;
+    }
+
+    if (sanitizedName.length < 2) {
+      setError('Please enter a valid full name.');
+      return;
+    }
+
+    if (sanitizedMessage.length < 5) {
+      setError('Please enter a meaningful message.');
+      return;
+    }
+
+    setLastSubmitTime(now);
+
+    // Compose sanitized WhatsApp message directly to official contact
+    const text = `*Inquiry from Dhupguri Santi Sangha Website*%0A*Name:* ${encodeURIComponent(
+      sanitizedName
+    )}%0A*Phone:* ${encodeURIComponent(sanitizedPhone)}%0A*Subject:* ${encodeURIComponent(
+      sanitizedSubject
+    )}%0A*Message:* ${encodeURIComponent(sanitizedMessage)}`;
+
+    window.open(`https://wa.me/919832065943?text=${text}`, '_blank', 'noopener,noreferrer');
     setSubmitted(true);
   };
 
@@ -170,6 +212,12 @@ export const ContactSection: React.FC = () => {
                 </div>
               )}
 
+              {error && (
+                <div className="mb-6 p-4 rounded-xl bg-red-500/10 border border-red-500/30 text-xs text-red-800 font-medium">
+                  {error}
+                </div>
+              )}
+
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
                   <label htmlFor="contact-name" className="block text-xs font-bold text-[#0B3D25] uppercase tracking-wider mb-1">
@@ -179,6 +227,7 @@ export const ContactSection: React.FC = () => {
                     id="contact-name"
                     type="text"
                     required
+                    maxLength={80}
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                     placeholder="Enter your name"
@@ -194,6 +243,7 @@ export const ContactSection: React.FC = () => {
                     id="contact-phone"
                     type="tel"
                     required
+                    maxLength={20}
                     value={formData.phone}
                     onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                     placeholder="+91 98765 43210"
@@ -212,7 +262,7 @@ export const ContactSection: React.FC = () => {
                     className="w-full px-4 py-2.5 rounded-xl border border-[#145A32]/20 bg-[#FAF8F2] text-base text-[#202820] focus:outline-none focus:ring-2 focus:ring-[#145A32] focus:bg-white"
                   >
                     <option value="General Inquiry">General Club Inquiry</option>
-                    <option value="Durga Puja 2026 Celebration">Durga Puja 2026 Celebration</option>
+                    <option value="Kali Puja 2026 Celebration">Kali Puja 2026 Celebration</option>
                     <option value="Cultural Event Participation">Cultural Event Participation</option>
                     <option value="Sports & Gymnasium Program">Sports &amp; Gymnasium Program</option>
                     <option value="Membership & Community Welfare">Membership &amp; Community Welfare</option>
@@ -227,6 +277,7 @@ export const ContactSection: React.FC = () => {
                     id="contact-message"
                     required
                     rows={4}
+                    maxLength={1000}
                     value={formData.message}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                     placeholder="Write your message or inquiry here..."

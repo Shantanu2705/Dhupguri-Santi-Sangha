@@ -94,8 +94,8 @@ export const Footer: React.FC = () => {
                 </Link>
               </li>
               <li>
-                <Link href="/#durga-puja-2026" className="text-[#DFC483] font-semibold hover:underline">
-                  Durga Puja 2026 Announcement
+                <Link href="/#kali-puja-2026" className="text-[#DFC483] font-semibold hover:underline">
+                  Kali Puja 2026 Announcement
                 </Link>
               </li>
             </ul>

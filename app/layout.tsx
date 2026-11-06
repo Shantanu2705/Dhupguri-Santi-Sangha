@@ -38,7 +38,7 @@ export const metadata: Metadata = {
     'Dhupguri club',
     'Santi Sangha 1959',
     'Dhupguri cultural club',
-    'Durga Puja 2026 Abu Dhabi Hindu Temple theme',
+    'Kali Puja 2026 Abu Dhabi Hindu Temple theme',
     'Kali Puja Samman 2025 Dhupguri',
     'Ghosh Para Dhupguri',
     'West Bengal clubs',

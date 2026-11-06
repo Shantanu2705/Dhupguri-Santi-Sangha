@@ -74,13 +74,17 @@ export const CLUB_INFO = {
     'Since its foundation, the club has remained committed to bringing the community together, preserving cultural traditions, encouraging participation in sports and supporting the development of society.',
     'Today, Dhupguri Santi Sangha continues to represent unity, dedication, tradition and community spirit.',
   ],
-  durgaPuja2026: {
+  kaliPuja2026: {
     clubName: 'DHUPGURI SANTI SANGHA',
-    eventName: 'DURGA PUJA 2026',
+    eventName: 'KALI PUJA 2026',
     theme: 'ABU DHABI HINDU TEMPLE',
     ceremonyTitle: 'OPENING CEREMONY',
     date: '6 NOVEMBER 2026',
     time: '7:00 PM',
+  },
+  // Backwards compatibility alias
+  get durgaPuja2026() {
+    return this.kaliPuja2026;
   },
 };
 

@@ -89,11 +89,11 @@ export const Hero: React.FC = () => {
               </Link>
 
               <Link
-                href="#durga-puja-2026"
+                href="#kali-puja-2026"
                 className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-4 py-3 text-xs font-semibold uppercase tracking-wider text-[#DFC483] hover:text-white transition-colors text-center"
               >
                 <Flame className="w-4 h-4 text-[#DFC483]" />
-                <span>Durga Puja 2026 Theme &rarr;</span>
+                <span>Kali Puja 2026 Theme &rarr;</span>
               </Link>
             </div>
 
